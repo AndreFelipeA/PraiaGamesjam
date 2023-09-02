@@ -1,17 +1,24 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Numerics;
 using UnityEngine;
+using Vector2 = UnityEngine.Vector2;
 
 public class PlayerMovement : MonoBehaviour
 {
     public float moveSpeed;
     public Rigidbody2D rb;
     private Vector2 moveDir;
-
+    private float elapsedTime;
+    private Vector2 smoothInputVelocity;
+    [SerializeField]
+    
+    private float smoothInputSpeed;
     // Update is called once per frame
     void Update()
     {
         ProcessInputs();
+
     }
 
     void  FixedUpdate()
@@ -23,7 +30,8 @@ public class PlayerMovement : MonoBehaviour
     {
         float moveX = Input.GetAxisRaw("Horizontal");
         float moveY = Input.GetAxisRaw("Vertical");
-        moveDir =  new Vector2(moveX,moveY).normalized;
+        UnityEngine.Vector2 input = new UnityEngine.Vector2(moveX,moveY);
+        moveDir = Vector2.SmoothDamp(moveDir, input, ref smoothInputVelocity, smoothInputSpeed);
     }
 
     void Move()
