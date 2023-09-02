@@ -17,6 +17,10 @@ public class PlayerMovement : MonoBehaviour
 
     private bool facingLeft = false;
     // Update is called once per frame
+    public GameObject aura;
+    void Start(){
+        aura = transform.Find("Aura").gameObject;
+    }
     void Update()
     {
         ProcessInputs();
@@ -55,6 +59,10 @@ public class PlayerMovement : MonoBehaviour
         UnityEngine.Vector3 currentScale = gameObject.transform.localScale;
         currentScale.x *= -1;
         gameObject.transform.localScale = currentScale;
+        //Unflip Aura
+        UnityEngine.Vector3 auraScale = aura.transform.localScale;
+        auraScale.x *= -1;
+        aura.transform.localScale = auraScale;
         facingLeft = !facingLeft;
     }
 }
