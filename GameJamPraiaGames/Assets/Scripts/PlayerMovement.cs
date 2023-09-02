@@ -7,6 +7,7 @@ using Vector2 = UnityEngine.Vector2;
 public class PlayerMovement : MonoBehaviour
 {
     public float moveSpeed;
+    public Animator animator;
     public Rigidbody2D rb;
     private Vector2 moveDir;
     private float elapsedTime;

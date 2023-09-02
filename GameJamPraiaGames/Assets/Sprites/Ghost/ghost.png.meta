@@ -440,6 +440,27 @@ TextureImporter:
       indices: 
       edges: []
       weights: []
+    - serializedVersion: 2
+      name: ghost_16
+      rect:
+        serializedVersion: 2
+        x: 192
+        y: 0
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1c5738446df9507469e136cdd385df84
+      internalID: 791082120
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     outline: []
     physicsShape: []
     bones: []
@@ -459,6 +480,10 @@ TextureImporter:
       ghost_13: 840319844
       ghost_14: 826662451
       ghost_15: 321747226
+      ghost_16: 791082120
+      ghost_17: -1643248053
+      ghost_18: -256210780
+      ghost_19: 1416270978
       ghost_2: 701887595
       ghost_3: -769353409
       ghost_4: -1603959850
