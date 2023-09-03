@@ -10,7 +10,6 @@ public class PlayerMovement : MonoBehaviour
     public Animator animator;
     public Rigidbody2D rb;
     private Vector2 moveDir;
-    private float elapsedTime;
     private Vector2 smoothInputVelocity;
     [SerializeField]
     
@@ -19,12 +18,21 @@ public class PlayerMovement : MonoBehaviour
     private bool facingLeft = false;
     // Update is called once per frame
     public GameObject aura;
+
+    public float scareCooldown;
+    bool readyToScare = true;
+
+    bool canWalk = true;
+
+    public float walkCooldown;
+    
     void Start(){
         aura = transform.Find("Aura").gameObject;
     }
     void Update()
     {
         ProcessInputs();
+        Scare();
 
     }
 
@@ -38,7 +46,15 @@ public class PlayerMovement : MonoBehaviour
         float moveX = Input.GetAxisRaw("Horizontal");
         float moveY = Input.GetAxisRaw("Vertical");
         UnityEngine.Vector2 input = new UnityEngine.Vector2(moveX,moveY);
-        moveDir = Vector2.SmoothDamp(moveDir, input, ref smoothInputVelocity, smoothInputSpeed);
+        if(canWalk == true)
+        {
+            moveDir = Vector2.SmoothDamp(moveDir, input, ref smoothInputVelocity, smoothInputSpeed);
+        }
+
+        if(moveX != 0 || moveY != 0)
+            animator.SetBool("moving", true);
+        else
+            animator.SetBool("moving", false);
 
         if(moveX > 0 && !facingLeft)
         {
@@ -48,11 +64,13 @@ public class PlayerMovement : MonoBehaviour
         {
             Flip();
         }
+        
     }
 
     void Move()
     {
         rb.velocity = new Vector2(moveDir.x * moveSpeed, moveDir.y * moveSpeed);
+
     }
 
     void Flip()
@@ -65,5 +83,33 @@ public class PlayerMovement : MonoBehaviour
         auraScale.x *= -1;
         aura.transform.localScale = auraScale;
         facingLeft = !facingLeft;
+    }
+
+
+    void Scare()
+    {
+        if (Input.GetButtonDown("Fire1") && readyToScare)
+        {
+            readyToScare = false;
+            canWalk = false;
+            Invoke(nameof(ResetScare), scareCooldown);
+            Invoke(nameof(ResetWalk), walkCooldown);
+            animator.SetBool("scaring", true);
+        }
+        else
+        {
+            animator.SetBool("scaring", false);
+        }
+    }
+
+
+    private void ResetScare()
+    {
+        readyToScare = true;
+    }
+
+    private void ResetWalk()
+    {
+        canWalk = true;
     }
 }
