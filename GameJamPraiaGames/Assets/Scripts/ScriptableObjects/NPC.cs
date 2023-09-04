@@ -137,21 +137,77 @@ public class NPC : MonoBehaviour
         }
     }
 
-    void StateHandler()
+void StateHandler()
     {
         if(likesLight == true && lightItems == 1 && likesNoise == true && soundItems == 1)
         {
             Sleeping();
         }
-        if(likesLight == true && lightItems == 1 && likesNoise == true && soundItems == 0)
-        {
-            Nightmare();
-        }
-        if(likesLight == false && lightItems == 1 && likesNoise == true && soundItems == 1)
+        if (likesLight == true && lightItems == 1 && likesNoise == false && soundItems == 0)
         {
             Sleeping();
         }
+        if (likesLight == true && lightItems == 1 && likesNoise == true && soundItems == 0)
+        {
+            Nightmare();
+        }
+        if(likesLight == true && lightItems == 1 && likesNoise == false && soundItems == 1)
+        {
+            Nightmare();
+        }
+        
+   
+        if(likesLight == true && lightItems == 0 && likesNoise == true && soundItems == 1)
+        {
+            Nightmare();
+        }
+        if(likesLight == true && lightItems == 0 && likesNoise == true && soundItems == 0)
+        {
+            Nightmare();
+        }
+        if(likesLight == true && lightItems == 0 && likesNoise == false && soundItems == 1)
+        {
+            Nightmare();
+        }
+        if(likesLight == true && lightItems == 0 && likesNoise == false && soundItems == 0)
+        {
+            Nightmare();
+        }
 
+        if(likesLight == false && lightItems == 1 && likesNoise == true && soundItems == 1)
+        {
+            Nightmare();
+        }
+        if(likesLight == false && lightItems == 1 && likesNoise == true && soundItems == 0)
+        {
+            Nightmare();
+        }
+        if(likesLight == false && lightItems == 1 && likesNoise == false && soundItems == 1)
+        {
+            Nightmare();
+        }
+        if(likesLight == false && lightItems == 1 && likesNoise == false && soundItems == 0)
+        {
+            Nightmare();
+        }
+
+       
+        if(likesLight == false && lightItems == 0 && likesNoise == true && soundItems == 0)
+        {
+            Nightmare();
+        }
+        if(likesLight == false && lightItems == 0 && likesNoise == false && soundItems == 1)
+        {
+            Nightmare();
+        }
+        if (likesLight == false && lightItems == 0 && likesNoise == false && soundItems == 0)
+        {
+            Sleeping();
+        }
+        if (likesLight == false && lightItems == 0 && likesNoise == true && soundItems == 1)
+        {
+            Sleeping();
+        }
 
     }
 
