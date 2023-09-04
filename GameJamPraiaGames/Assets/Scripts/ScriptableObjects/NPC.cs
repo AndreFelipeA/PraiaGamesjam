@@ -38,6 +38,8 @@ public class NPC : MonoBehaviour
 
     public GameObject dream;
 
+    private bool ate = false;
+
 
     void Start()
     {
@@ -55,25 +57,23 @@ public class NPC : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        StateHandler();
+        if(ate == false)
+        {
+            CheckItemsState();
+
+        }
     }
 
     public void Interact()
     {
-        switch(state)
+        if(state == State.Dreaming)
         {
-            case State.Dreaming:
-                Awake();
-            break;
-            case State.Awaken:
-                Nightmare();
-            break;
-            case State.Nightmare:
-                Sleeping();
-            break;
-
+            dream.SetActive(false);
+            ate = true;
         }
-    }   
+    }
+
+    
 
     public void Awake()
     {
@@ -137,77 +137,51 @@ public class NPC : MonoBehaviour
         }
     }
 
-void StateHandler()
+    void CheckItemsState()
+    {
+        int light = 0;
+        int sound = 0;
+        foreach(GameObject obj in items)
+        {
+
+            Item item = obj.GetComponent<Item>();
+            if(item.state == ItemState.On && item.type == ItemType.Light)
+            {
+                light = 1;
+            }
+
+            if(item.state == ItemState.On && item.type == ItemType.Sound)
+            {
+                
+                sound = 1;
+            }
+        }
+        StateHandler(sound, light);
+    }
+
+void StateHandler(int soundItems, int lightItems)
     {
         if(likesLight == true && lightItems == 1 && likesNoise == true && soundItems == 1)
         {
             Sleeping();
         }
-        if (likesLight == true && lightItems == 1 && likesNoise == false && soundItems == 0)
+        else if (likesLight == true && lightItems == 1 && likesNoise == false && soundItems == 0)
         {
             Sleeping();
         }
-        if (likesLight == true && lightItems == 1 && likesNoise == true && soundItems == 0)
+        else if (likesLight == false && lightItems == 0 && likesNoise == false && soundItems == 0)
         {
-            Nightmare();
+            Sleeping();
         }
-        if(likesLight == true && lightItems == 1 && likesNoise == false && soundItems == 1)
+        else if (likesLight == false && lightItems == 0 && likesNoise == true && soundItems == 1)
         {
-            Nightmare();
+            Sleeping();
         }
-        
-   
-        if(likesLight == true && lightItems == 0 && likesNoise == true && soundItems == 1)
-        {
-            Nightmare();
-        }
-        if(likesLight == true && lightItems == 0 && likesNoise == true && soundItems == 0)
-        {
-            Nightmare();
-        }
-        if(likesLight == true && lightItems == 0 && likesNoise == false && soundItems == 1)
-        {
-            Nightmare();
-        }
-        if(likesLight == true && lightItems == 0 && likesNoise == false && soundItems == 0)
+        else
         {
             Nightmare();
         }
 
-        if(likesLight == false && lightItems == 1 && likesNoise == true && soundItems == 1)
-        {
-            Nightmare();
-        }
-        if(likesLight == false && lightItems == 1 && likesNoise == true && soundItems == 0)
-        {
-            Nightmare();
-        }
-        if(likesLight == false && lightItems == 1 && likesNoise == false && soundItems == 1)
-        {
-            Nightmare();
-        }
-        if(likesLight == false && lightItems == 1 && likesNoise == false && soundItems == 0)
-        {
-            Nightmare();
-        }
-
-       
-        if(likesLight == false && lightItems == 0 && likesNoise == true && soundItems == 0)
-        {
-            Nightmare();
-        }
-        if(likesLight == false && lightItems == 0 && likesNoise == false && soundItems == 1)
-        {
-            Nightmare();
-        }
-        if (likesLight == false && lightItems == 0 && likesNoise == false && soundItems == 0)
-        {
-            Sleeping();
-        }
-        if (likesLight == false && lightItems == 0 && likesNoise == true && soundItems == 1)
-        {
-            Sleeping();
-        }
 
     }
 

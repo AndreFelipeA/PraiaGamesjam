@@ -12,7 +12,10 @@ public class InteractionSystem : MonoBehaviour
 
     
     public float scareCooldown;
+
+    public float eatCooldown;
     bool readyToScare = true;
+    bool readyToEat = true;
     public Animator animator;
 
     private bool isDead = false;
@@ -27,7 +30,6 @@ public class InteractionSystem : MonoBehaviour
             {
                 if(DetectObject())
                 {
-                    print(detectedObject.name);
                     if(detectedObject.layer == 7)
                     {
 
@@ -35,6 +37,7 @@ public class InteractionSystem : MonoBehaviour
                     }
                     else
                         detectedObject.GetComponent<Item>().Interact();
+                    
                     
                 }
             }
@@ -48,7 +51,22 @@ public class InteractionSystem : MonoBehaviour
             Scare();
             return true;
         }
+        if(Input.GetButtonDown("Fire2") && readyToEat == true)
+        {
+            Eat();
+            return true;
+        }
         return false;
+    }
+
+    void Eat()
+    {
+        if(readyToEat)
+        {
+            readyToScare = false;
+            Invoke(nameof(ResetEat), eatCooldown);
+            // animator.SetBool("eat", true);
+        }
     }
 
     void Scare()
@@ -67,6 +85,12 @@ public class InteractionSystem : MonoBehaviour
     {
         animator.SetBool("scaring", false);
         readyToScare = true;
+    }
+
+    private void ResetEat()
+    {
+        // animator.SetBool("eat", false);
+        readyToEat = true;
     }
 
 
@@ -88,7 +112,6 @@ public class InteractionSystem : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D other)
     {
-        print(other.gameObject.layer);
         if(other.gameObject.layer == 7)
         {
             if(other.gameObject.GetComponent<NPC>().state == State.Awaken)
