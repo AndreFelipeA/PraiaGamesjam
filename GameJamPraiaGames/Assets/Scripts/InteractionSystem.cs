@@ -19,9 +19,12 @@ public class InteractionSystem : MonoBehaviour
     public Animator animator;
 
     private bool isDead = false;
-    
+    public SFXPlayer sfxPlayer;
+
     public delegate void PlayerDeath();
     public static event PlayerDeath OnPlayerDead;
+
+   
     void Update()
     {
         if(isDead == false)
@@ -73,7 +76,9 @@ public class InteractionSystem : MonoBehaviour
         {
             readyToEat = false;
             Invoke(nameof(ResetEat), eatCooldown);
+            sfxPlayer.PlayBite();
             animator.SetBool("biting", true);
+            
         }
     }
 
@@ -83,7 +88,9 @@ public class InteractionSystem : MonoBehaviour
         {
             readyToScare = false;
             Invoke(nameof(ResetScare), scareCooldown);
+            sfxPlayer.PlayScare();
             animator.SetBool("scaring", true);
+            
         }
 
     }
