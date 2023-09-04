@@ -63,9 +63,9 @@ public class InteractionSystem : MonoBehaviour
     {
         if(readyToEat)
         {
-            readyToScare = false;
+            readyToEat = false;
             Invoke(nameof(ResetEat), eatCooldown);
-            // animator.SetBool("eat", true);
+            animator.SetBool("biting", true);
         }
     }
 
@@ -89,7 +89,7 @@ public class InteractionSystem : MonoBehaviour
 
     private void ResetEat()
     {
-        // animator.SetBool("eat", false);
+        animator.SetBool("biting", false);
         readyToEat = true;
     }
 
