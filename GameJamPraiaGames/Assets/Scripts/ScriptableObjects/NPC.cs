@@ -38,7 +38,7 @@ public class NPC : MonoBehaviour
 
     public GameObject dream;
 
-    private bool ate = false;
+    public bool ate = false;
 
 
     void Start()

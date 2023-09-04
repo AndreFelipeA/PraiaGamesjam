@@ -26,18 +26,26 @@ public class InteractionSystem : MonoBehaviour
     {
         if(isDead == false)
         {
-            if(InteractInput())
+            int button = InteractInput();
+            if(button == 1)
+            {
+                if(DetectObject())
+                {
+                    if(detectedObject.layer == 6)
+                    {
+                        detectedObject.GetComponent<Item>().Interact();
+                    }
+                    
+                }
+            }
+            else if(button == 2)
             {
                 if(DetectObject())
                 {
                     if(detectedObject.layer == 7)
                     {
-
                         detectedObject.GetComponent<NPC>().Interact();
                     }
-                    else
-                        detectedObject.GetComponent<Item>().Interact();
-                    
                     
                 }
             }
@@ -45,18 +53,18 @@ public class InteractionSystem : MonoBehaviour
         }
     }
 
-    bool InteractInput()
+    int InteractInput()
     {
         if(Input.GetButtonDown("Fire1") && readyToScare == true){
             Scare();
-            return true;
+            return 1;
         }
-        if(Input.GetButtonDown("Fire2") && readyToEat == true)
+        else if(Input.GetButtonDown("Fire2") && readyToEat == true)
         {
             Eat();
-            return true;
+            return 2;
         }
-        return false;
+        return 0;
     }
 
     void Eat()

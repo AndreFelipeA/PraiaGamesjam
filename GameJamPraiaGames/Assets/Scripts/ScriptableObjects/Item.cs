@@ -66,13 +66,21 @@ public class Item : MonoBehaviour
     void TurnOn()
     {
         this.state = ItemState.On;
-        npc.Awake();
+        if(npc.ate == false)
+        {
+
+            npc.Awake();
+        }
     }
 
     void TurnOff()
     {
         this.state = ItemState.Off;
-        npc.Awake();
+        if(npc.ate == false)
+        {
+
+            npc.Awake();
+        }
     }
 
 

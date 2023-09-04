@@ -4,11 +4,13 @@ using System.Numerics;
 using UnityEngine;
 using Vector2 = UnityEngine.Vector2;
 
+[RequireComponent(typeof(Rigidbody2D))]
+
 public class PlayerMovement : MonoBehaviour
 {
     public float moveSpeed;
     public Animator animator;
-    public Rigidbody2D rb;
+    private Rigidbody2D rb;
     private Vector2 moveDir;
     private Vector2 smoothInputVelocity;
     [SerializeField]
@@ -17,8 +19,15 @@ public class PlayerMovement : MonoBehaviour
 
     private bool facingLeft = false;
     // Update is called once per frame
-    private bool isDead = false;
+    public bool isDead = false;
+
+    public delegate void GameOver();
+    public static event GameOver OnGameOver;
     
+    private void Awake() {
+        rb = this.GetComponent<Rigidbody2D>();
+        
+    }
     void Start()
     {
         InteractionSystem.OnPlayerDead += IsDead;
@@ -90,7 +99,19 @@ public class PlayerMovement : MonoBehaviour
         isDead = true;
         moveDir = new Vector2(0,0);
         rb.velocity = new Vector2(0,0);
+        animator.SetBool("dying", true);
+        StartCoroutine(EndGame());
+
     }
 
+    IEnumerator EndGame()
+    {
+        //yield on a new YieldInstruction that waits for 5 seconds.
+        yield return new WaitForSeconds(1);
+        if(OnGameOver != null)
+        {
+            OnGameOver();
+        }
+    }
 
 }
