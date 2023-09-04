@@ -19,6 +19,7 @@ public class Item : MonoBehaviour
 {
     public ItemState state;
     public ItemType type;
+    public GameObject lightSource;
 
     public NPC npc;
 
@@ -38,7 +39,7 @@ public class Item : MonoBehaviour
     void Update()
     {
 
-        if(state == ItemState.On)
+        /*if(state == ItemState.On)
         {
             this.GetComponent<SpriteRenderer>().color = new Color (0,255,0);
 
@@ -46,7 +47,7 @@ public class Item : MonoBehaviour
         else
         {
             this.GetComponent<SpriteRenderer>().color = new Color (254,0,0);
-        }
+        }*/
     }
 
     public void Interact()
@@ -55,8 +56,10 @@ public class Item : MonoBehaviour
         {
             case ItemState.On:
                 TurnOff();
+                lightSource.SetActive(false);
             break;
             case ItemState.Off:
+                lightSource.SetActive(true);
                 TurnOn();
             break;
 
